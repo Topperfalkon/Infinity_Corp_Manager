@@ -12,7 +12,12 @@ else
 //Create register form and populate the username field!
 	echo
 	(
-		"<html>
+		"<!DOCTYPE html>
+		<html>
+		<head>
+		<title>Infinity Corp Manager Prototype</title>
+		<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />
+		</head>
 		<body>
 		<p>The username you entered didn't seem to exist.<br />
 		If you feel this was in error, please click <a href=\"index.php\">here</a> to try again. 
