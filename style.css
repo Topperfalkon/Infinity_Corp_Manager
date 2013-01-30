@@ -1,0 +1,47 @@
+body
+{
+background-image:url('back.png');
+background-repeat:repeat-x;
+color:#A9A9A9;
+font:15px calibri, sans-serif;
+}
+
+h1
+{
+text-align:center;
+color:#FF0000;
+font:42px calibri, sans-serif;
+}
+
+a:visited
+{
+color:#FF2F2F;
+}
+
+a:link
+{
+color:#3F3FFF;
+}
+
+
+table
+{
+border-collapse:collapse;
+}
+
+table, th, td
+{
+border: 2px solid #1F1F1F;
+}
+
+div.menu
+{
+float:left;
+width: 10%;
+height: 100%;
+}
+
+div.main
+{
+width; 90%
+}
