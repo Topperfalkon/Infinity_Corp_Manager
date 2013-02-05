@@ -7,7 +7,7 @@
 *
 *
 *************************************************/
-*
+
 //start the session
 session_start();
 //make sure the db is alive
