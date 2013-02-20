@@ -4,17 +4,27 @@
 *
 * By Harley Faggetter
 *
-* Database creation scripts for 
+* Database creation scripts for  ICM
+*
+* NOTES:
+* - This project uses deprecated PHP MySQL functions. I should change them in the future.
+*
+*
+* TODO:
+* Move actual db stuff to installaction.php
+*
 */
 
 //declare variables globally TODO: make sure all required variables are declared
-$state = $GET_['state'];
-$dbserver = $POST_['dbserver'];
-$dbname = $POST_['dbname'];
-$dbuser = $POST_['dbuser'];
-$dbpass = $POST_['dbpass'];
+$state = $POST_["state"];
+$dbserver = $POST_["dbserver"];
+$dbname = $POST_["dbname"];
+$dbuser = $POST_["dbuser"];
+$dbpass = $POST_["dbpass"];
 
-if ($state == 1)
+echo ("<br />State is:" . $state . ", " . $dbuser);
+
+if ($state === "1")
 {
 	//TODO: Handle user input, create DB, supply response.
 	//		Check user input if DB already exists. If not, create it
@@ -24,14 +34,21 @@ if ($state == 1)
 		die('Could not connect: ' . mysql_error());
 	}
 	
-	//TODO: Expand the mysql_query to do full create
-	/*if (mysql_query("CREATE DATABASE my_db",$con))
+	if (!mysql_select_db($dbname))
 	{
-		echo "Database created";
-	}*/
+		//TODO: Expand the mysql_query to do full create
+		/*if (mysql_query("CREATE DATABASE my_db",$con))
+		{
+			echo "Database created";
+		}*/
+		//else
+		//{
+			echo "Error creating database: " . mysql_error();
+		//}
+	}
 	else
 	{
-		echo "Error creating database: " . mysql_error();
+		echo "SUCCESS!";
 	}
 
 	mysql_close($con);
@@ -47,14 +64,15 @@ else
 			Enter your database connection details here. <br />
 			Many database providers will supply you with a name for your database, otherwise, pick a name.
 		</p><br />
-		<form action=\"/install.php?state=1\" method=\"POST\">
+		<form action=\"installaction.php\" method=\"POST\">
 			Database Server: <input type=\"text\" name=\"dbserver\"><br />
 			Database Name: <input type=\"text\" name=\"dbname\"><br />
-			DB Username: <input type=\"password\" name=\"dbuser\"><br />
+			DB Username: <input type=\"text\" name=\"dbuser\"><br />
 			DB Password: <input type=\"password\" name=\"dbpass\"><br />
 			<input type=\"submit\" value=\"Submit\">
 		</form> 
 	");
+
 }
 
 
