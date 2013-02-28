@@ -16,13 +16,14 @@
 */
 
 //declare variables globally TODO: make sure all required variables are declared
-$state = $POST_["state"];
-$dbserver = $POST_["dbserver"];
-$dbname = $POST_["dbname"];
-$dbuser = $POST_["dbuser"];
-$dbpass = $POST_["dbpass"];
+$state = $_GET["state"];
+$dbserver = $_POST["dbserver"];
+$dbname = $_POST["dbname"];
+$dbuser = $_POST["dbuser"];
+$dbpass = $_POST["dbpass"];
 
-echo ("<br />State is:" . $state . ", " . $dbuser);
+//TEST STUB
+//echo ("<br />State is:" . $state . ", " . $dbuser . "," . $dbpass );
 
 if ($state === "1")
 {
@@ -37,7 +38,7 @@ if ($state === "1")
 	if (!mysql_select_db($dbname))
 	{
 		//TODO: Expand the mysql_query to do full create
-		/*if (mysql_query("CREATE DATABASE my_db",$con))
+		/*if (mysql_query("CREATE DATABASE " . $dbname,$con))
 		{
 			echo "Database created";
 		}*/
@@ -48,6 +49,7 @@ if ($state === "1")
 	}
 	else
 	{
+		//TEST STUB
 		echo "SUCCESS!";
 	}
 
@@ -64,7 +66,7 @@ else
 			Enter your database connection details here. <br />
 			Many database providers will supply you with a name for your database, otherwise, pick a name.
 		</p><br />
-		<form action=\"installaction.php\" method=\"POST\">
+		<form action=\"install.php?state=1\" method=\"POST\">
 			Database Server: <input type=\"text\" name=\"dbserver\"><br />
 			Database Name: <input type=\"text\" name=\"dbname\"><br />
 			DB Username: <input type=\"text\" name=\"dbuser\"><br />
@@ -74,7 +76,6 @@ else
 	");
 
 }
-
 
 
 
