@@ -52,23 +52,56 @@ if ($state === "1")
 		//TEST STUB
 		echo "SUCCESS!";
 		
-		//Create config.php then write to it. Apparently it's quite literal abour the writing part. Tabs and all.
-		$file = fopen("config.php",x);
-		fwrite($file,
+		$condb = mysql_connect($dbserver,$dbuser,$dbpass,$dbname);
+		
+		//TODO: Modify the 'quotes' to check if causing error.
+		$sql="CREATE TABLE IF NOT EXISTS Corp_Membership` (
+			`ID` int(11) NOT NULL AUTO_INCREMENT,
+			`User_Id` varchar(255) COLLATE latin1_german2_ci NOT NULL,
+			`Username` varchar(255) COLLATE latin1_german2_ci NOT NULL,
+			`Corp_Id` varchar(255) COLLATE latin1_german2_ci NOT NULL,
+			`Is_approved` varchar(1) COLLATE latin1_german2_ci DEFAULT NULL,
+			`Allow_Multi` varchar(1) COLLATE latin1_german2_ci DEFAULT NULL,
+			PRIMARY KEY (`ID`),
+			UNIQUE KEY `ID` (`ID`)
+			) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=2;";
+			
+			// $sql="CREATE TABLE IF NOT EXISTS Corp_Membership` (
+			// `ID` int(11) NOT NULL AUTO_INCREMENT,
+			// `User_Id` varchar(255) COLLATE latin1_german2_ci NOT NULL,
+			// `Username` varchar(255) COLLATE latin1_german2_ci NOT NULL,
+			// `Corp_Id` varchar(255) COLLATE latin1_german2_ci NOT NULL,
+			// `Is_approved` varchar(1) COLLATE latin1_german2_ci DEFAULT NULL,
+			// `Allow_Multi` varchar(1) COLLATE latin1_german2_ci DEFAULT NULL,
+			// PRIMARY KEY (`ID`),
+			// UNIQUE KEY `ID` (`ID`)
+			// ) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=2;";
+		
+		
+		if (mysql_query($con,$sql))
+		{
+			//Create config.php then write to it. Apparently it's quite literal abour the writing part. Tabs and all.
+			$file = fopen("config.php",x);
+			fwrite($file,
 "<?php
 //GLOBAL VARIABLES
 
 	//DB VARIABLES
-	\$dbserver = \"" . $dbserver . "\";
-	\$dbname = \"" . $dbname . "\";
-	\$dbuser = \"" . $dbuser . "\";
-	\$dbpass = \"" . $dbpass . "\";
-
+	\$dbserver = \"$dbserver\";
+	\$dbname = \"$dbname\";
+	\$dbuser = \"$dbuser\";
+	\$dbpass = \"$dbpass\";
+	\$con = mysql_connect(\$dbserver,\$dbuser,\$dbpass);
+	\$condb = mysql_connect(\$dbserver,\$dbuser,\$dbpass,\$dbname);
 ?>
-		");
-		fclose($file);
+			");
+			fclose($file);
+		}
+		else
+		{
+			echo "\nSomething went wrong, " . mysql_error();
+		}
 	}
-
 	mysql_close($con);
 }
 
