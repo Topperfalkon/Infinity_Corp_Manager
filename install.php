@@ -38,19 +38,35 @@ if ($state === "1")
 	if (!mysql_select_db($dbname))
 	{
 		//TODO: Expand the mysql_query to do full create
-		/*if (mysql_query("CREATE DATABASE " . $dbname,$con))
+		if (mysql_query("CREATE DATABASE " . $dbname,$con))
 		{
 			echo "Database created";
-		}*/
-		//else
-		//{
+		}
+		else
+		{
 			echo "Error creating database: " . mysql_error();
-		//}
+		}
 	}
 	else
 	{
 		//TEST STUB
 		echo "SUCCESS!";
+		
+		//Create config.php then write to it. Apparently it's quite literal abour the writing part. Tabs and all.
+		$file = fopen("config.php",x);
+		fwrite($file,
+"<?php
+//GLOBAL VARIABLES
+
+	//DB VARIABLES
+	\$dbserver = \"" . $dbserver . "\";
+	\$dbname = \"" . $dbname . "\";
+	\$dbuser = \"" . $dbuser . "\";
+	\$dbpass = \"" . $dbpass . "\";
+
+?>
+		");
+		fclose($file);
 	}
 
 	mysql_close($con);
