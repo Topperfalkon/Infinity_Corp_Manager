@@ -55,15 +55,15 @@ if ($state === "1")
 		$condb = mysql_connect($dbserver,$dbuser,$dbpass,$dbname);
 		
 		//TODO: Modify the 'quotes' to check if causing error.
-		$sql="CREATE TABLE IF NOT EXISTS Corp_Membership` (
-			`ID` int(11) NOT NULL AUTO_INCREMENT,
-			`User_Id` varchar(255) COLLATE latin1_german2_ci NOT NULL,
-			`Username` varchar(255) COLLATE latin1_german2_ci NOT NULL,
-			`Corp_Id` varchar(255) COLLATE latin1_german2_ci NOT NULL,
-			`Is_approved` varchar(1) COLLATE latin1_german2_ci DEFAULT NULL,
-			`Allow_Multi` varchar(1) COLLATE latin1_german2_ci DEFAULT NULL,
-			PRIMARY KEY (`ID`),
-			UNIQUE KEY `ID` (`ID`)
+		$sql="CREATE TABLE IF NOT EXISTS Corp_Membership (
+			ID int(11) NOT NULL AUTO_INCREMENT,
+			User_Id varchar(255) COLLATE latin1_german2_ci NOT NULL,
+			Username varchar(255) COLLATE latin1_german2_ci NOT NULL,
+			Corp_Id varchar(255) COLLATE latin1_german2_ci NOT NULL,
+			Is_approved varchar(1) COLLATE latin1_german2_ci DEFAULT NULL,
+			Allow_Multi varchar(1) COLLATE latin1_german2_ci DEFAULT NULL,
+			PRIMARY KEY (ID),
+			UNIQUE KEY ID (ID)
 			) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=2;";
 			
 			// $sql="CREATE TABLE IF NOT EXISTS Corp_Membership` (
