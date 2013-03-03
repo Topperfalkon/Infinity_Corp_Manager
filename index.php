@@ -10,10 +10,6 @@
 *************************************************/
 session_start();
 
-//Redundant test code
-
-/*//echo isset($_SESSION['login'];
-//echo $_SESSION['corpowner'];*/
 
 //Check that you're logged in.
 if($_SESSION['login']===1)

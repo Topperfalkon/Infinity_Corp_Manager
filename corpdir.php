@@ -7,18 +7,19 @@
 *
 *
 *************************************************/
+//Load config
+include 'config.php';
 
 //start the session
 session_start();
 //make sure the db is alive
-$con = mysql_connect("db405409244.db.1and1.com","dbo405409244","testpass");
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
   }
 
 //select the db
-mysql_select_db("db405409244", $con);
+mysql_select_db($dbname, $con);
 
 //Get a db query  
 $result = mysql_query("SELECT * FROM Test_Corporations");

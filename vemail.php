@@ -1,7 +1,8 @@
 <?php
+//Load config
+include 'config.php';
 
 //make sure the db is alive
-$con = mysql_connect("db405409244.db.1and1.com","dbo405409244","testpass");
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
@@ -10,7 +11,7 @@ if (!$con)
 $username=$_GET['user'];
 
 //select the db
-mysql_select_db("db405409244", $con);
+mysql_select_db($dbname, $con);
 
 //get the email address
 $sql = "SELECT Email FROM test_users WHERE UserName = '" . $username . "'";
@@ -20,7 +21,7 @@ $row = mysql_fetch_array($query);
 $email = $row['Email'];
 
 
-//construct a hash to send as part fothe email
+//construct a hash to send as part of the email
 $hash=hash('md5',$username . "keelhaul");
 
 //now send the email

@@ -1,8 +1,10 @@
 <?php
+//Load config
+include 'config.php';
+
 session_start();
 
 //make sure the db is alive
-$con = mysql_connect("db405409244.db.1and1.com","dbo405409244","testpass");
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
@@ -38,7 +40,7 @@ else
 	}
 
 	//select the db
-	mysql_select_db("db405409244", $con);
+	mysql_select_db($dbname, $con);
 
 	$sql = "UPDATE test_users 
 	SET Verified = 'Y' 

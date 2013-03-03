@@ -1,11 +1,12 @@
 <?php
+//Load config
+include 'config.php';
 session_start();
 
 //make sure you're actually logged in
 if($_SESSION['login']===1)
 {
 	//make sure the db is alive
-	$con = mysql_connect("db405409244.db.1and1.com","dbo405409244","testpass");
 	if (!$con)
 	  {
 	  die('Could not connect: ' . mysql_error());
@@ -22,7 +23,7 @@ if($_SESSION['login']===1)
 	$allowMulti= $_POST['allowMulti'];
 	  
 	//select the db
-	mysql_select_db("db405409244", $con);
+	mysql_select_db($dbname, $con);
 
 	//Check required fields are populated
 	if(!strlen($corpname) > 0)
@@ -69,24 +70,23 @@ if($_SESSION['login']===1)
 	//We have to put the users into the database now
 	else
 	{
-	$sqladd="INSERT INTO Test_Corporations (CorpName, CreatorName, IsOpen, CorpTicker, CorpDesc, AllowMulti, CorpURL, Logo)
-	VALUES('$corpname','$username','$isOpen','$corptick','$corpdesc','$allowMulti','$corpURL','$logoURL')";
+		$sqladd="INSERT INTO Test_Corporations (CorpName, CreatorName, IsOpen, CorpTicker, CorpDesc, AllowMulti, CorpURL, Logo)
+		VALUES('$corpname','$username','$isOpen','$corptick','$corpdesc','$allowMulti','$corpURL','$logoURL')";
 
-	if (!mysql_query($sqladd,$con))
-	{
-		die('Error: ' . mysql_error());
-	}
+		if (!mysql_query($sqladd,$con))
+		{
+			die('Error: ' . mysql_error());
+		}
 
-	$_SESSION['corpowner']= 1;
+		$_SESSION['corpowner']= 1;
 
-	echo 
-	(
-		"Your corp has now been created.
-		<br />
-		<p><a href=\"index.php\">Return to main menu</a></p>"
-	);
+		echo 
+		(
+			"Your corp has now been created.
+			<br />
+			<p><a href=\"index.php\">Return to main menu</a></p>"
+		);
 	} 
-	//header( 'Location: http://test.phoeniximperium.org/index.php'); //This returns us back to the default page with session details
 }
 else
 {

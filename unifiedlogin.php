@@ -1,8 +1,10 @@
 <?php
+//Load config
+include 'config.php';
+
 session_start();
 
 //make sure the db is alive
-$con = mysql_connect("db405409244.db.1and1.com","dbo405409244","testpass");
 if (!$con)
   {
   die('Could not connect: ' . mysql_error());
@@ -12,7 +14,7 @@ $user = mysql_real_escape_string($_POST['user']);  //sanitising the input to pro
 $pass=crypt($_POST["loginP"],'$1$test12345678$'); //yummy, encryption so that people don't leave plaintext passwords in the db (and for a bonus sanitises them too!)
 
 //select the db
-mysql_select_db("db405409244", $con);
+mysql_select_db($dbname, $con);
 
 //check you don't already exist
 $sql = "SELECT * FROM test_users WHERE UserName like '" . $user . "'";

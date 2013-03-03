@@ -1,4 +1,7 @@
 <?php
+//Load config
+include 'config.php';
+
 session_start();
 
 //make sure you're actually logged out
@@ -10,7 +13,6 @@ if($_SESSION['login']===1)
 else
 {
 	//make sure the db is alive
-	$con = mysql_connect("db405409244.db.1and1.com","dbo405409244","testpass");
 	if (!$con)
 	{
 		die('Could not connect: ' . mysql_error());
@@ -59,7 +61,7 @@ else
 	else
 	{
 		//select the db
-		mysql_select_db("db405409244", $con);
+		mysql_select_db($dbname, $con);
 		//echo "PLACEHOLDER TEXT";
 		//whilst the register step comes up because your user isn't on the system, make sure the user they're registering also isn't on the system either.
 		$sql = "SELECT * FROM test_users WHERE UserName like '" . $username . "'";
@@ -81,25 +83,8 @@ else
 				die('Error: ' . mysql_error());
 			}
 			
-			//Now we can log them in
-			//$_SESSION['login']=1;
-			//$_SESSION['username']=$_POST['user'];
-			//header( 'Location: http://test.phoeniximperium.org/index.php'); //This returns us back to the default page with session details
+			//Push them to the verification page
 			header("Location: http://test.phoeniximperium.org/vemail.php?user=" . $username);
-			
-			//Send a verification email
-			/*$headers = "From: topperfalkon@phoeniximperium.org\r\n";
-			$headers .= "MIME-Version: 1.0\r\n";
-			$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-			$message = 
-			"Welcome to the Infinity Corporation Manager.\n
-			Please <a href=\"http://test.phoeniximperium.org/verify.php?user=" . $username . "&verified=y\"> click here</a> to finish verification.";
-			mail($email,"Verify your email address for the Infinity Corporation Manager",$message,$headers);
-			echo 
-			(
-			"A verification email has been sent to your email address. Please open it and follow the link to verify your account.<br />
-			<a href=\"index.php\">Click here to return to login page"
-			);*/
 		}
 	}
 }

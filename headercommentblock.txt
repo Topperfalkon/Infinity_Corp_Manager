@@ -1,9 +1,7 @@
 /************************************************
-*	Infinity Corp Manager Index Page
+*	Infinity Corp Manager [PAGENAME]
 *	
-*	Created by Harley Faggetter
-*
-*
+*	[DESCRIPTION]
 *
 *
 *************************************************/
