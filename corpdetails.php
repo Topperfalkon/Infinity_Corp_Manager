@@ -18,7 +18,7 @@ if (!$con)
 }
 
 //select the db
-mysql_select_db($dbname, $con);
+mysql_select_db($dbname);
 
 $corp=$_GET['corpid'];
 

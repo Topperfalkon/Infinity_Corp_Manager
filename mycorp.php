@@ -14,7 +14,7 @@ if($_SESSION['login']===1)
 	  }
 
 	//select the db
-	mysql_select_db($dbname, $con);
+	mysql_select_db($dbname);
 
 	$user= $_SESSION['username'];
 

@@ -61,7 +61,7 @@ else
 	else
 	{
 		//select the db
-		mysql_select_db($dbname, $con);
+		mysql_select_db($dbname);
 		//echo "PLACEHOLDER TEXT";
 		//whilst the register step comes up because your user isn't on the system, make sure the user they're registering also isn't on the system either.
 		$sql = "SELECT * FROM test_users WHERE UserName like '" . $username . "'";

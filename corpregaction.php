@@ -23,7 +23,7 @@ if($_SESSION['login']===1)
 	$allowMulti= $_POST['allowMulti'];
 	  
 	//select the db
-	mysql_select_db($dbname, $con);
+	mysql_select_db($dbname);
 
 	//Check required fields are populated
 	if(!strlen($corpname) > 0)

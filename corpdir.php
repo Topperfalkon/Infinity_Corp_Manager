@@ -19,7 +19,7 @@ if (!$con)
   }
 
 //select the db
-mysql_select_db($dbname, $con);
+mysql_select_db($dbname);
 
 //Get a db query  
 $result = mysql_query("SELECT * FROM Test_Corporations");

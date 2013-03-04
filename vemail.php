@@ -11,7 +11,7 @@ if (!$con)
 $username=$_GET['user'];
 
 //select the db
-mysql_select_db($dbname, $con);
+mysql_select_db($dbname);
 
 //get the email address
 $sql = "SELECT Email FROM test_users WHERE UserName = '" . $username . "'";
@@ -37,6 +37,6 @@ mail($email,"Verify your email address for the Infinity Corporation Manager",$me
 echo 
 (
 "A verification email has been sent to your email address. Please open it and follow the link to verify your account.<br />
-<a href=\"index.php\">Click here to return to login page"
+<a href=\"index.php\">Click here to return to login page</a>"
 );
 ?>

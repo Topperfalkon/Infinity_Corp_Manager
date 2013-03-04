@@ -40,7 +40,7 @@ else
 	}
 
 	//select the db
-	mysql_select_db($dbname, $con);
+	mysql_select_db($dbname);
 
 	$sql = "UPDATE test_users 
 	SET Verified = 'Y' 

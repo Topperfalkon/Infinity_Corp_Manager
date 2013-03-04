@@ -14,7 +14,7 @@ $user = mysql_real_escape_string($_POST['user']);  //sanitising the input to pro
 $pass=crypt($_POST["loginP"],'$1$test12345678$'); //yummy, encryption so that people don't leave plaintext passwords in the db (and for a bonus sanitises them too!)
 
 //select the db
-mysql_select_db($dbname, $con);
+mysql_select_db($dbname);
 
 //check you don't already exist
 $sql = "SELECT * FROM test_users WHERE UserName like '" . $user . "'";

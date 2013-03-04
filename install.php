@@ -94,7 +94,7 @@ if ($state === "1")
 	else
 	{
 		
-		mysql_select_db($dbname, $con);
+		mysql_select_db($dbname);
 
 		if (createTables() == 1)
 		{
