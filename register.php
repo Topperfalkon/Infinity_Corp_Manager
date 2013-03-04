@@ -7,7 +7,7 @@ session_start();
 //make sure you're actually logged out
 if($_SESSION['login']===1)
 {
-	header( 'Location: http://test.phoeniximperium.org/index.php');
+	header( 'Location: /index.php');
 }
 
 else
@@ -84,7 +84,7 @@ else
 			}
 			
 			//Push them to the verification page
-			header("Location: http://test.phoeniximperium.org/vemail.php?user=" . $username);
+			header("Location: /vemail.php?user=" . $username);
 		}
 	}
 }

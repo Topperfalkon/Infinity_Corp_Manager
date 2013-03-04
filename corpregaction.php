@@ -90,6 +90,6 @@ if($_SESSION['login']===1)
 }
 else
 {
-	header( 'Location: http://test.phoeniximperium.org/index.php');
+	header( 'Location: /index.php');
 }
 ?>

@@ -50,6 +50,6 @@ else
 			{
 			die('Error: ' . mysql_error());
 			}
-	header ( 'Location: http://test.phoeniximperium.org/index.php?v=1'); //take us back to the index with the verified parameter set
+	header ( 'Location: /index.php?v=1'); //take us back to the index with the verified parameter set
 }
 ?>

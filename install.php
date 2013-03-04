@@ -112,8 +112,8 @@ if ($state === "1")
 	\$dbpass = \"$dbpass\";
 	\$con = mysql_connect(\$dbserver,\$dbuser,\$dbpass);
 	\$condb = mysql_connect(\$dbserver,\$dbuser,\$dbpass,\$dbname);
-?>
-			");
+?>"
+			);
 			fclose($file);
 			echo 
 			("

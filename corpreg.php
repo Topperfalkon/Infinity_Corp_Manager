@@ -41,7 +41,7 @@ echo
 }
 else
 {
-	header( 'Location: http://test.phoeniximperium.org/index.php');
+	header( 'Location: /index.php');
 }
 
 ?>

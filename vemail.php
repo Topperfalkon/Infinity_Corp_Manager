@@ -24,7 +24,7 @@ $email = $row['Email'];
 //construct a hash to send as part of the email
 $hash=hash('md5',$username . "keelhaul");
 
-//now send the email
+//now send the email	Change the address in the message and the first header
 $headers = "From: topperfalkon@phoeniximperium.org\r\n";
 $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";

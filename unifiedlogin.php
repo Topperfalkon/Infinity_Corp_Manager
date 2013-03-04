@@ -64,12 +64,12 @@ if (mysql_num_rows($rResult) > 0)
 				$_SESSION['corpowner']=1;
 				}
 			
-			header( 'Location: http://test.phoeniximperium.org/index.php'); //This returns us back to the default page with session details
+			header( 'Location: /index.php'); //This returns us back to the default page with session details
 			}
 		}
 	}   
 else
 {
-	header( 'Location: http://test.phoeniximperium.org/registerform.php?username=' . $user); //This will now punt us to a new registration form instead
+	header( 'Location: /registerform.php?username=' . $user); //This will now punt us to a new registration form instead
 } 
 ?>

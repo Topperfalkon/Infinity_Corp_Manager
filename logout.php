@@ -6,5 +6,5 @@ $_SESSION = array();
 // destroy the session 
 session_destroy(); 
 
-header( 'Location: http://test.phoeniximperium.org/index.php');
+header( 'Location: /index.php');
 ?>

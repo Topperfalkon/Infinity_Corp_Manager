@@ -11,4 +11,3 @@
 	$con = mysql_connect($dbserver,$dbuser,$dbpass);			//Command to connect to the DB Server
 	$condb = mysql_connect($dbserver,$dbuser,$dbpass,$dbname);	//Command to directly connect to a database
 ?>
-			
