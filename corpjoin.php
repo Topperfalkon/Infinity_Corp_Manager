@@ -73,7 +73,7 @@ if($_SESSION['login']===1)
 			VALUES('$userID','$corp')";
 	}
 	
-			if (!mysql_query($sqladd,$con))
+			if (!mysql_query($sqladd))
 			{
 			die('Error: ' . mysql_error());
 			}

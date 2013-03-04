@@ -23,7 +23,7 @@ if($_SESSION['login']===1)
 	  }
 
 	//select the db
-	mysql_select_db($dbname, $con);
+	mysql_select_db($dbname);
 
 	$user= $_SESSION['username'];
 
@@ -35,14 +35,19 @@ if($_SESSION['login']===1)
 
 	//Pass the results into the forms
 	echo
-	(
-	"
-	<html>
-	<head>
-		<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />
-	</head>
-	<iframe src= \"index.php\" width= \"150\" height= \"100%\" align= \"left\" scrolling= \"no\" frameborder=\"0\"></iframe>
-	<body>
+	("
+		<html>
+		<head>
+			<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />
+		</head>
+		<body>
+		<div class=\"menu\">
+	");
+	include "menu.php";
+	echo
+	("
+		</div>
+		<div class=\"main\">
 		<form name=\"input\" action=\"corpeditaction.php\" method=\"post\">
 		<table border='1'>
 		<tr>
@@ -107,6 +112,7 @@ if($_SESSION['login']===1)
 		<br />
 		<a href=mycorp.php>Cancel and return to corp page</a><br />
 		<a href=index.php>Return to Main Page</a>
+		</div>
 		</body>
 		</html>"
 	);

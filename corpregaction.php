@@ -73,7 +73,7 @@ if($_SESSION['login']===1)
 		$sqladd="INSERT INTO Test_Corporations (CorpName, CreatorName, IsOpen, CorpTicker, CorpDesc, AllowMulti, CorpURL, Logo)
 		VALUES('$corpname','$username','$isOpen','$corptick','$corpdesc','$allowMulti','$corpURL','$logoURL')";
 
-		if (!mysql_query($sqladd,$con))
+		if (!mysql_query($sqladd))
 		{
 			die('Error: ' . mysql_error());
 		}

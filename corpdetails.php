@@ -11,6 +11,9 @@
 //Load config
 include 'config.php';
 
+//start the session
+session_start();
+
 //make sure the db is alive
 if (!$con)
 {
@@ -60,8 +63,8 @@ echo
 	);
 include 'menu.php';
 echo
-	(
-		"</div>
+(
+	"</div>
 	<body>
 	<table border='1'>
 	<tr>

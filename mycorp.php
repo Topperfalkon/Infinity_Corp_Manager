@@ -51,9 +51,17 @@ if($_SESSION['login']===1)
 			"
 			<html>
 			<head>
-			<link rel=\"stylesheet\" type=\"text/css\" href=\"test.css\" />
+			<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />
 			</head>
-			<iframe src= \"index.php\" width= \"150\" height= \"100%\" align= \"left\" scrolling= \"no\" frameborder=\"0\"></iframe>
+			<!-- <iframe src= \"index.php\" width= \"150\" height= \"100%\" align= \"left\" scrolling= \"no\" frameborder=\"0\"></iframe> -->
+			<body>
+			<div class=\"menu\">
+		");
+		include "menu.php";
+		echo
+		("
+			</div>
+			<div class=\"main\">
 			<table border='1'>
 			<tr>
 			<th>Ticker</th>
@@ -88,15 +96,15 @@ if($_SESSION['login']===1)
 
 		echo 
 		(
-		"<br />
-		<form name=\"input\" action=\"corpedit.php\" method=\"link\">
-		<input type=\"submit\" value=\"Edit\" />
-		</form>"
+			"<br />
+			<form name=\"input\" action=\"corpedit.php\" method=\"link\">
+			<input type=\"submit\" value=\"Edit\" />
+			</form>"
 		);
 		//TO DO: add an edit option here
 
 		//When users are done, they'll want a simple route back to the main page
-		echo "<br /><br />Return to <a href=\"index.php\">Main Page</a></html>";
+		echo "<br /><br />Return to <a href=\"index.php\">Main Page</a></body></html>";
 	}
 
 	else
