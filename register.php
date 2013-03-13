@@ -78,7 +78,7 @@ else
 			$sqladd="INSERT INTO test_users (UserName, Password, Email, CanEmail)
 			VALUES('$username','$passone','$email','$canEmail')";
 
-			if (!mysql_query($sqladd,$con))
+			if (!mysql_query($sqladd))
 			{
 				die('Error: ' . mysql_error());
 			}

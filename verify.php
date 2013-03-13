@@ -46,7 +46,7 @@ else
 	SET Verified = 'Y' 
 	where UserName = '" . $username . "'";
 
-	if (!mysql_query($sql,$con))
+	if (!mysql_query($sql))
 			{
 			die('Error: ' . mysql_error());
 			}
