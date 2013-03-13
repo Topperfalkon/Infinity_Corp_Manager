@@ -17,7 +17,7 @@ $dbserver = $_POST["dbserver"];
 $dbname = $_POST["dbname"];
 $dbuser = $_POST["dbuser"];
 $dbpass = $_POST["dbpass"];
-$siteadd = $_POST["siteadd"]
+$siteadd = $_POST["siteadd"];
 
 //function to allow passing all SQL queries BEFORE moving on to writing to config
 function createTables()
@@ -139,7 +139,7 @@ else
 	echo
 	("
 		<!--TODO: Make stuff prettier and more informative and stuff -->
-		<<html>
+		<html>
 			<head>
 				<title></title>
 			</head>
@@ -153,14 +153,13 @@ else
 					Database Name: <input type=\"text\" name=\"dbname\" /><br />
 					DB Username: <input type=\"text\" name=\"dbuser\" /><br />
 					DB Password: <input type=\"password\" name=\"dbpass\" /><br />
-					<br />
 					<p>You also need to enter the name of the domain address installed to (i.e.: \"http://test.test.com\"). Include the 
-					http://, but don't include any trailing slashes</p><br />
+					http://, but don't include any trailing slashes.</p><br />
 					Site address: <input type=\"text\" name=\"siteadd\" />
 					<input type=\"submit\" value=\"Submit\">
 				</form> 
 			</body>
-		</html>>
+		</html>
 	");
 
 }
