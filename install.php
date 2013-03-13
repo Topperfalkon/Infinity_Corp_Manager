@@ -9,7 +9,6 @@
 * NOTES:
 * - This project uses deprecated PHP MySQL functions. I should change them in the future.
 *
-*
 */
 
 //declare variables globally TODO: make sure all required variables are declared
@@ -18,6 +17,7 @@ $dbserver = $_POST["dbserver"];
 $dbname = $_POST["dbname"];
 $dbuser = $_POST["dbuser"];
 $dbpass = $_POST["dbpass"];
+$siteadd = $_POST["siteadd"]
 
 //function to allow passing all SQL queries BEFORE moving on to writing to config
 function createTables()
@@ -112,6 +112,9 @@ if ($state === "1")
 	\$dbpass = \"$dbpass\";
 	\$con = mysql_connect(\$dbserver,\$dbuser,\$dbpass);
 	\$condb = mysql_connect(\$dbserver,\$dbuser,\$dbpass,\$dbname);
+
+	//OTHER VARIABLES
+	\$siteadd = \"$siteadd\";
 ?>"
 			);
 			fclose($file);
@@ -136,17 +139,28 @@ else
 	echo
 	("
 		<!--TODO: Make stuff prettier and more informative and stuff -->
-		<p>
-			Enter your database connection details here. <br />
-			Many database providers will supply you with a name for your database, otherwise, pick a name.
-		</p><br />
-		<form action=\"install.php?state=1\" method=\"POST\">
-			Database Server: <input type=\"text\" name=\"dbserver\"><br />
-			Database Name: <input type=\"text\" name=\"dbname\"><br />
-			DB Username: <input type=\"text\" name=\"dbuser\"><br />
-			DB Password: <input type=\"password\" name=\"dbpass\"><br />
-			<input type=\"submit\" value=\"Submit\">
-		</form> 
+		<<html>
+			<head>
+				<title></title>
+			</head>
+			<body>
+				<p>
+					Enter your database connection details here. <br />
+					Many database providers will supply you with a name for your database, otherwise, pick a name.
+				</p><br />
+				<form action=\"install.php?state=1\" method=\"POST\">
+					Database Server: <input type=\"text\" name=\"dbserver\" /><br />
+					Database Name: <input type=\"text\" name=\"dbname\" /><br />
+					DB Username: <input type=\"text\" name=\"dbuser\" /><br />
+					DB Password: <input type=\"password\" name=\"dbpass\" /><br />
+					<br />
+					<p>You also need to enter the name of the domain address installed to (i.e.: \"http://test.test.com\"). Include the 
+					http://, but don't include any trailing slashes</p><br />
+					Site address: <input type=\"text\" name=\"siteadd\" />
+					<input type=\"submit\" value=\"Submit\">
+				</form> 
+			</body>
+		</html>>
 	");
 
 }

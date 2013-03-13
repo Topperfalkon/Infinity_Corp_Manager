@@ -30,7 +30,7 @@ $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 $message = 
 "Welcome to the Infinity Corporation Manager.\n
-Please <a href=\"http://test.phoeniximperium.org/verify.php?user=" . $username . "&hash=" . $hash . "&verified=y\"> click here</a> to finish verification.";
+Please <a href=\"" . $siteadd . "/verify.php?user=" . $username . "&hash=" . $hash . "&verified=y\"> click here</a> to finish verification.";
 mail($email,"Verify your email address for the Infinity Corporation Manager",$message,$headers);
 
 //tell the user the email has been sent.
