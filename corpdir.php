@@ -52,7 +52,7 @@ echo
 	<th>Allow Multi-Clanning?</th>
 	<th>Homepage URL</th>
 	</tr>
-)";
+");
 
 //pass the values into an array loop
 while($row = mysql_fetch_array($result))
