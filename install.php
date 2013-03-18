@@ -1,167 +1,130 @@
 <?php 
-/*
-* Infinity Corp Manager - install.php
-*
-* By Harley Faggetter
-*
-* Database creation scripts for  ICM
-*
-* NOTES:
-* - This project uses deprecated PHP MySQL functions. I should change them in the future.
-*
-*/
+/**
+ * Installer for Infinity Corp Manager
+ *
+ * This file performs the following functions:
+ *
+ * * Gets configuration settings from user via HTML form
+ * * Creates database if not exists
+ * * Creates tables
+ * * Stores settings in config.php
+ * 
+ * @package Infinity_Corp_Manager
+ */
 
-//declare variables globally TODO: make sure all required variables are declared
-$state = $_GET["state"];
-$dbserver = $_POST["dbserver"];
-$dbname = $_POST["dbname"];
-$dbuser = $_POST["dbuser"];
-$dbpass = $_POST["dbpass"];
-$siteadd = $_POST["siteadd"];
+header('Content-Type: text/html; charset=utf-8');
 
-//function to allow passing all SQL queries BEFORE moving on to writing to config
-function createTables()
-{
-	//One bigass array to hold all the SQL DB CREATE scripts
-	$sql=array
-	(
-		"CREATE TABLE IF NOT EXISTS `test_users` (
-		`UserName` varchar(255) COLLATE latin1_german2_ci NOT NULL,
-		`Password` varchar(255) COLLATE latin1_german2_ci NOT NULL,
-		`User_Id` int(11) NOT NULL AUTO_INCREMENT,
-		`Email` varchar(254) COLLATE latin1_german2_ci NOT NULL,
-		`CanEmail` varchar(1) COLLATE latin1_german2_ci NOT NULL,
-		`Verified` varchar(1) COLLATE latin1_german2_ci DEFAULT NULL,
-		PRIMARY KEY (`User_Id`),
-		UNIQUE KEY `User_Id` (`User_Id`)
-		) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci",
-		"CREATE TABLE IF NOT EXISTS `Test_Corporations` (
-		`Corp_Id` int(11) NOT NULL AUTO_INCREMENT,
-		`CorpName` varchar(255) COLLATE latin1_german2_ci NOT NULL,
-		`CreatorName` varchar(255) COLLATE latin1_german2_ci NOT NULL,
-		`IsOpen` varchar(1) COLLATE latin1_german2_ci NOT NULL,
-		`CorpTicker` varchar(6) COLLATE latin1_german2_ci DEFAULT NULL,
-		`CorpDesc` text COLLATE latin1_german2_ci,
-		`AllowMulti` varchar(1) COLLATE latin1_german2_ci NOT NULL,
-		`Logo` varchar(255) COLLATE latin1_german2_ci DEFAULT NULL,
-		`CorpURL` varchar(255) COLLATE latin1_german2_ci DEFAULT NULL,
-		PRIMARY KEY (`Corp_Id`),
-		UNIQUE KEY `Corp_Id` (`Corp_Id`)
-		) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci",
-		"CREATE TABLE IF NOT EXISTS `Corp_Membership` (
-		`ID` int(11) NOT NULL AUTO_INCREMENT,
-		`User_Id` varchar(255) COLLATE latin1_german2_ci NOT NULL,
-		`Username` varchar(255) COLLATE latin1_german2_ci NOT NULL,
-		`Corp_Id` varchar(255) COLLATE latin1_german2_ci NOT NULL,
-		`Is_approved` varchar(1) COLLATE latin1_german2_ci DEFAULT NULL,
-		`Allow_Multi` varchar(1) COLLATE latin1_german2_ci DEFAULT NULL,
-		PRIMARY KEY (`ID`),
-		UNIQUE KEY `ID` (`ID`)
-		) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci"
-	);
-		
-	//One loop to iterate through the array. Will switch to foreach when I'm more confident with its implementation
-	for($i = 0; $i < 3; $i++)
-	{
-		$query=mysql_query($sql[$i]);
-	}
-	return 1;
-}
+// Form to output, unless form has been submitted
+if (!isset($_POST['submit'])) {
+	echo "<html>
+	<head>
+		<title>ICM Installation</title>
+	</head>
+	<body>
+		<p>Enter your database connection details here. The database will be created if it does not exist.<br />If you are using shared hosting you will have to create the database via your hosting control panel. Please use utf8.</p>
+		<form action=\"install.php\" method=\"post\">
+			<p>Database Server: <input type=\"text\" name=\"dbserver\" /></p>
+			<p>Database Name: <input type=\"text\" name=\"dbname\" /></p>
+			<p>DB Username: <input type=\"text\" name=\"dbuser\" /></p>
+			<p>DB Password: <input type=\"password\" name=\"dbpass\" /></p>
+			<p><input type=\"submit\" name=\"submit\" value=\"Submit\">
+		</form> 
+	</body>
+</html>";
+	
+} else {
 
-
-if ($state === "1")
-{
-	//TODO: Handle user input, create DB, supply response.
-	//		Check user input if DB already exists. If not, create it
-	$con = mysql_connect($dbserver,$dbuser,$dbpass);
-	if (!$con)
-	{
-		die('Could not connect: ' . mysql_error());
+	// Copy form data into variables for better code readability
+	$dbserver = $_POST["dbserver"];
+	$dbname = $_POST["dbname"];
+	$dbuser = $_POST["dbuser"];
+	$dbpass = $_POST["dbpass"];
+	
+	$mysqli = new mysqli($dbserver, $dbuser, $dbpass);
+	
+	if ($mysqli->connect_errno) {
+		die ("Failed to connect to MySQL server: ({$mysqli->connect_errno}) {$mysqli->connect_error}");
 	}
 	
-	if (!mysql_select_db($dbname))
-	{
-		//TODO: Expand the mysql_query to do full create
-		if (mysql_query("CREATE DATABASE " . $dbname,$con))
-		{
-			echo "Database created";
+	$mysqli->set_charset("utf8");
+
+	// Connection established
+	
+	if (!$mysqli->select_db($dbname)) {
+		echo "Database <em>$dbname</em> does not exist, attempting to create it... ";
+		if ($mysqli->query("CREATE DATABASE $dbname DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci")) {
+			echo "Database <em>$dbname</em> created successfully.<br/>";
+		} else if ($mysqli->errno == 1044) { // 1044	SQLSTATE: 42000 (ER_DBACCESS_DENIED_ERROR) Access denied for user '%s'@'%s' to database '%s'
+			die ("Failed to create database: User <em>$dbuser</em> does not have the required privilege<br/>");
+		} else { // Other error
+			die ("Failed to create database: ({$mysqli->errno}) {$mysqli->error}<br/>");
 		}
-		else
-		{
-			echo "Error creating database: " . mysql_error();
+	} else {
+		$result = $mysqli->query("SELECT default_character_set_name FROM information_schema.SCHEMATA WHERE schema_name = '$dbname'");
+		$row = $result->fetch_row();
+		if ($row[0]!=='utf8') {
+			die ("It looks like you have created the database <em>$dbname</em>, but you didn't set the character encoding to utf8. Did you know that every time you use something other than utf8, a kitten dies under a pile of quest�on m�rks�<br/>
+	Please change the character encoding to utf8 and the collation to utf8_general_ci (You can use a different collation if you know which non-english language is going to be most commonly used.)");
+		} else {
+			echo "Database exists.<br />";
 		}
 	}
-	else
-	{
+	
+	// Database created. Let's create the tables
 		
-		mysql_select_db($dbname);
+	if (($mysqli->multi_query("
+		CREATE TABLE IF NOT EXISTS `icmdb`.`Users` (
+			`UserID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+			`UserName` VARCHAR(45) NOT NULL,
+			`Password` CHAR(60) NOT NULL,
+			`Email` VARCHAR(80) NOT NULL,
+			`EmailVisible` TINYINT(1) NULL,
+			`EmailVerified` TINYINT(1) NULL,
+			PRIMARY KEY (`UserID`),
+			UNIQUE INDEX `UserName_UNIQUE` (`UserName` ASC) )
+			ENGINE=MyISAM;
 
-		if (createTables() == 1)
-		{
-			//Create config.php then write to it. Apparently it's quite literal about the writing part. Tabs and all.
-			//In other words, making sure that file stays readable makes this file a bit messy.
-			$file = fopen("config.php",x);
-			fwrite($file,
-"<?php
-//GLOBAL VARIABLES
+		CREATE TABLE IF NOT EXISTS `icmdb`.`Corporations` (
+			`CorporationID` INT UNSIGNED NOT NULL,
+			`CorpName` VARCHAR(80) NOT NULL,
+			`LeaderID` INT UNSIGNED NOT NULL,
+			`Ticker` VARCHAR(6) NULL DEFAULT NULL,
+			`Description` TEXT NULL,
+			`JoinMode` TINYINT NULL DEFAULT 0 COMMENT '0 = Corp hidden | 1 = Anyone can join | 2 = Anyone can apply, application must be accepted | 3 = Invitation only',
+			`AllowMulti` TINYINT(1) NULL,
+			`HasLogo` TINYINT(1) NULL DEFAULT 0,
+			`Website` VARCHAR(80) NULL,
+			`DefaultPermissions` BINARY(1) NULL COMMENT 'Bitfield',
+			PRIMARY KEY (`CorporationID`),
+			INDEX `LeaderID` (`LeaderID` ASC) )
+			ENGINE=MyISAM;
 
-	//DB VARIABLES
-	\$dbserver = \"$dbserver\";
-	\$dbname = \"$dbname\";
-	\$dbuser = \"$dbuser\";
-	\$dbpass = \"$dbpass\";
-	\$con = mysql_connect(\$dbserver,\$dbuser,\$dbpass);
-	\$condb = mysql_connect(\$dbserver,\$dbuser,\$dbpass,\$dbname);
-
-	//OTHER VARIABLES
-	\$siteadd = \"$siteadd\";
-?>"
-			);
-			fclose($file);
-			echo 
-			("
-				Congratulations on succesfully installing the Infinity Corporation Manager Database. For added security, consider deleting install.php.<br />
-				Settings will be accessible in config.php.
-			");
-		}
-		//We need to show an error if something's gone wrong.
-		else
-		{
-			echo "<br />Something went wrong, " . mysql_error();
-		}
+		CREATE TABLE IF NOT EXISTS `icmdb`.`Membership` (
+			`UserID` INT UNSIGNED NOT NULL,
+			`CorporationID` INT UNSIGNED NOT NULL,
+			`Status` TINYINT NULL COMMENT '0 = Applied | 1 = Member | 2 = Invited',
+			`Permissions` BINARY(1) NULL COMMENT 'Bitfield',
+			PRIMARY KEY (`UserID`, `CorporationID`),
+			INDEX `Corporation` (`CorporationID` ASC) )
+			ENGINE=MyISAM;"
+	)) && ($mysqli->next_result()) && ($mysqli->next_result())) {
+		echo "Tables created.";
+	} else {
+		die ("Failed to create table(s): ({$mysqli->errno}) {$mysqli->error}<br />");
 	}
-	mysql_close($con);
+	$mysqli->close();
+
+	// Create config.php
+	file_put_contents('config.php', array(
+		'<?php',
+		'// Database',
+		"\$dbserver = '{$dbserver}';",
+		"\$dbuser   = '{$dbuser}';",
+		"\$dbname   = '{$dbname}';",
+		"\$dbpass   = '{$dbpass}';",
+		'?>')
+	);
+	
+	echo ('Congratulations on succesfully installing the Infinity Corporation Manager Database. For added security, please delete install.php.<br />Settings have been saved to config.php.');
 }
-
-else
-{
-	//TODO: Generate form to capture details
-	echo
-	("
-		<!--TODO: Make stuff prettier and more informative and stuff -->
-		<html>
-			<head>
-				<title></title>
-			</head>
-			<body>
-				<p>
-					Enter your database connection details here. <br />
-					Many database providers will supply you with a name for your database, otherwise, pick a name.
-				</p><br />
-				<form action=\"install.php?state=1\" method=\"POST\">
-					Database Server: <input type=\"text\" name=\"dbserver\" /><br />
-					Database Name: <input type=\"text\" name=\"dbname\" /><br />
-					DB Username: <input type=\"text\" name=\"dbuser\" /><br />
-					DB Password: <input type=\"password\" name=\"dbpass\" /><br />
-					<p>You also need to enter the name of the domain address installed to (i.e.: \"http://test.test.com\"). Include the 
-					http://, but don't include any trailing slashes.</p><br />
-					Site address: <input type=\"text\" name=\"siteadd\" />
-					<input type=\"submit\" value=\"Submit\">
-				</form> 
-			</body>
-		</html>
-	");
-
-}
-
 ?>
