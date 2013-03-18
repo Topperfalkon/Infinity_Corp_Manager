@@ -1,32 +1,42 @@
-Infinity_Corp_Manager
+Infinity Corp Manager
 =====================
 
-Repo for the (open-source variant) Infinity Corp Manager project
+This is a fork of [Topperfalkon's Infinity Corp Manager](https://github.com/Topperfalkon/Infinity_Corp_Manager) project
 
-Introduction
-============
-The Infinity Corp Manager project started out as a project with a dual purpose. My primary goal when writing the ICM was to teach myself PHP, and I have certainly learnt a lot so far on this journey. However, the project is still a long way from being fully usable, so I felt my duty came to turn this over to the open domain. As such, please assume that this code is under CC BY-SA-NC until otherwise specified in a license file. You MAY fork this project and you MAY create your own derived work from this code. I'd very much like to receive credit for my part of the code though and would kindly ask that people not try to make money (directly) off it.
+Infinity Corp Manager
+---------------------
+
+Infinity Corp Manager is a PHP and MySQL web application for the organisation of player groups. It is targeted at the community of the upcoming game, [Infinity](#infinity), but is currently a generic community management tool.
+
+Background of this fork
+-----------------------
+
+[Topperfalkon](http://github.com/Topperfalkon) started the Infinity Corp Manager project in part to teach himself PHP.
+He acknowledged it was a long way off a usable product and released the code under [CC BY-SA-NC](http://creativecommons.org/licenses/by-nc-sa/3.0/) enabling others to help in the development of the application for the Infinity community.
+
+For the status of Topperfalkon's original repo, see [his readme](https://github.com/Topperfalkon/Infinity_Corp_Manager/blob/master/README.md)
+
+Infinity<a id="infinity"></a>
+-----------------------------
+
+[Infinity](http://www.infinity-universe.com/) is an MMORPG currently in development. It is being built on the [I-Novae Engine](http://www.inovaestudios.com/technology.htm) which offers realistic scale galaxies including real-time seamless transition of the player from planetary surface to outer space.
+The game will not have the concepts of 'levels' and 'experience points' common to MMORPGS, instead, the player's real skill will determine their success: Ships will be controlled directly through a first-person perspective.
+
+The game will allow players to form groups or corporations and these are expected to play a massive part in the game as they do in EVE Online.
 
 System Requirements
-===================
+-------------------
+
 You'll need the following on your system to run the ICM
 * PHP
 * MySQL
-* A HTTP webserver, like Apache
+* An HTTP webserver, like Apache
 
 Installation
-============
+------------
+
 It's worth noting that this is very much still not suitable for public use. Only download if you're comfortable with fiddling with code.
 
-1. Pull the desired branch from the repository using your favourite git shell. (I can highly recommend GitHub's Windows GUI client)
-2. If you've put them in a folder you're not intending to use for web-hosting, move them to a public-facing location (like a web server)
-3. Navigate to /install.php and enter your DB credentials and anything else mentioned
-4. That should be it. Navigate to /index.php, create a user, and get cracking.
-
-Contributions
-=============
-I still very much want to work on this project myself to continue to aid my learning process, but I'll accept pull requests on the following basis
-
-* Your code is readable and has good indentation and is commented where relevant
-* You can demonstrate that your code has actually been tested and works
-* You are willing to teach me about your code's functionality if I am unfamiliar with it.
+1. Upload to web server under the document root.
+2. Open /install.php in your browser and follow the instructions.
+3. That should be it. Navigate to /index.php, create a user, and get cracking.
