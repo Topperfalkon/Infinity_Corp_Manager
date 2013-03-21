@@ -1,7 +1,7 @@
 Infinity Corp Manager
 =====================
 
-This is a fork of [Topperfalkon's Infinity Corp Manager](https://github.com/Topperfalkon/Infinity_Corp_Manager) project
+This is a fork of [Topperfalkon's Infinity Corp Manager](http://github.com/Topperfalkon/Infinity_Corp_Manager) project
 
 Infinity Corp Manager
 ---------------------
@@ -16,13 +16,13 @@ He acknowledged it was a long way off a usable product and released the code und
 
 For the status of Topperfalkon's original repo, see [his readme](https://github.com/Topperfalkon/Infinity_Corp_Manager/blob/master/README.md)
 
-Infinity<a id="infinity"></a>
+Infinity
 -----------------------------
 
 [Infinity](http://www.infinity-universe.com/) is an MMORPG currently in development. It is being built on the [I-Novae Engine](http://www.inovaestudios.com/technology.htm) which offers realistic scale galaxies including real-time seamless transition of the player from planetary surface to outer space.
 The game will not have the concepts of 'levels' and 'experience points' common to MMORPGS, instead, the player's real skill will determine their success: Ships will be controlled directly through a first-person perspective.
 
-The game will allow players to form groups or corporations and these are expected to play a massive part in the game as they do in EVE Online.
+The game will allow players to form groups or corporations and these are expected to play a massive part in the game, as they do in EVE Online.
 
 System Requirements
 -------------------

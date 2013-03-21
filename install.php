@@ -2,14 +2,17 @@
 /**
  * Installer for Infinity Corp Manager
  *
+ * This file is to be run once for the initial installation of the application on a server.
  * This file performs the following functions:
  *
  * * Gets configuration settings from user via HTML form
- * * Creates database if not exists
- * * Creates tables
+ * * Creates database and tables if it does not exist
  * * Stores settings in config.php
- * 
+ *
  * @package Infinity_Corp_Manager
+ * @license Creative Commons Attribution-NonCommercial-ShareAlike (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+ * @author Harley Fagetter (http://github.com/Topperfalkon/)
+ * @author Hamish Robertson (http://github.com/hrobertson/)
  */
 
 header('Content-Type: text/html; charset=utf-8');
@@ -27,6 +30,8 @@ if (!isset($_POST['submit'])) {
 			<p>Database Name: <input type=\"text\" name=\"dbname\" /></p>
 			<p>DB Username: <input type=\"text\" name=\"dbuser\" /></p>
 			<p>DB Password: <input type=\"password\" name=\"dbpass\" /></p>
+			<p>Please provide the URL of this ICM installation. eg example.com/ or test.example.com/infinity/</p>
+			<p>Site URL: <input type=\"text\" name=\"siteurl\" /></p>
 			<p><input type=\"submit\" name=\"submit\" value=\"Submit\">
 		</form> 
 	</body>
@@ -35,10 +40,10 @@ if (!isset($_POST['submit'])) {
 } else {
 
 	// Copy form data into variables for better code readability
-	$dbserver = $_POST["dbserver"];
-	$dbname = $_POST["dbname"];
-	$dbuser = $_POST["dbuser"];
-	$dbpass = $_POST["dbpass"];
+	$dbserver = $_POST['dbserver'];
+	$dbname = $_POST['dbname'];
+	$dbuser = $_POST['dbuser'];
+	$dbpass = $_POST['dbpass'];
 	
 	$mysqli = new mysqli($dbserver, $dbuser, $dbpass);
 	
@@ -85,7 +90,7 @@ if (!isset($_POST['submit'])) {
 			ENGINE=MyISAM;
 
 		CREATE TABLE IF NOT EXISTS `icmdb`.`Corporations` (
-			`CorporationID` INT UNSIGNED NOT NULL,
+			`CorporationID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
 			`CorpName` VARCHAR(80) NOT NULL,
 			`LeaderID` INT UNSIGNED NOT NULL,
 			`Ticker` VARCHAR(6) NULL DEFAULT NULL,
@@ -108,7 +113,7 @@ if (!isset($_POST['submit'])) {
 			INDEX `Corporation` (`CorporationID` ASC) )
 			ENGINE=MyISAM;"
 	)) && ($mysqli->next_result()) && ($mysqli->next_result())) {
-		echo "Tables created.";
+		echo 'Tables created.';
 	} else {
 		die ("Failed to create table(s): ({$mysqli->errno}) {$mysqli->error}<br />");
 	}
@@ -122,6 +127,9 @@ if (!isset($_POST['submit'])) {
 		"\$dbuser   = '{$dbuser}';",
 		"\$dbname   = '{$dbname}';",
 		"\$dbpass   = '{$dbpass}';",
+		'',
+		'// Other',
+		"\$siteURL = '{$_POST['siteurl']}';",
 		'?>')
 	);
 	
