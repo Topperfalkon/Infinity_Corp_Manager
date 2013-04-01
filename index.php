@@ -30,10 +30,7 @@ if($_SESSION['login']===1)
 	if($_SESSION['corpowner']===1)
 	{
 		echo "<p><a href=\"mycorp.php\" target=\"_top\">My Corp</a><br />";
-	}
-	//Otherwise show Corp Registration option	
-	elseif($_SESSION['corpowner']!=1)
-	{	
+	} else { //Otherwise show Corp Registration option	
 		echo "<p><a href=\"corpreg.php\" target=\"_top\">Corp Registration</a><br />";
 	}
 	//Then show everything else
