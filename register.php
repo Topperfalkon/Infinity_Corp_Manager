@@ -17,75 +17,48 @@ else
 	{
 		die('Could not connect: ' . mysql_error());
 	}
-
-	//declare variables
-
+	
 	$username= trim(mysql_real_escape_string($_POST['user']));
-	$passone=crypt($_POST["passone"],'$1$test12345678$');
-	$passtwo=crypt($_POST["passtwo"],'$1$test12345678$');
-	$email= trim(mysql_real_escape_string($_POST['email']));
-	$canEmail=$_POST['canEmail'];
-
-	//echo $canEmail;
-
+	
 	//Checks for required fields
 
-	if(!strlen($username) > 0)
+	if(!$username || !$_POST['passone'] || !$_POST['passtwo'])
 	{
-		echo "You missed some required data, please <a href=\"registerform.php\">try again</a>.";
-		die();
+		die ("You missed some required data, please <a href=\"registerform.php\">try again</a>.");
 	}
-
-	if(!strlen($_POST["passone"]) > 0)
+	if ($_POST['passone'] !== $_POST['passtwo'])
 	{
-		echo "You missed some required data, please <a href=\"registerform.php\">try again</a>.";
-		die();
+		die ("The two passwords you entered did not match, please <a href=\"registerform.php\">try again</a>.");
 	}
-
-	if(!strlen($_POST["passtwo"]) > 0)
+	//declare variables
+	
+	$pass=crypt($_POST["passone"],'$1$test12345678$'); // MD5 is rubbish. Use BCrypt.
+	$email= trim(mysql_real_escape_string($_POST['email']));
+	$canEmail=$_POST['canEmail'];
+	
+	//select the db
+	mysql_select_db($dbname);
+	//echo "PLACEHOLDER TEXT";
+	//whilst the register step comes up because your user isn't on the system, make sure the user they're registering also isn't on the system either.
+	$rResult = mysql_query("SELECT * FROM test_users WHERE UserName like '{$username}'");
+	if (mysql_num_rows($rResult) > 0)
+	//If the user already exists, the best option is to punt them back to the login page as punishment for doing it wrong or allow them to attempt to register again as a unique user
 	{
-		echo "You missed some required data, please <a href=\"registerform.php\">try again</a>.";
-		die();
-	}
-
-	//Check the two passwords are the same
-
-	$passcomp=strcmp($passone , $passtwo);
-
-	//failure path
-	if ($passcomp != 0)
-	{
-		echo "The two passwords you entered did not match, please <a href=\"registerform.php\">try again</a>.";
-	}
-	//success path
+		die ("This user already exists. Please <a href=\"index.php\">log in</a> or <a href=\"registerform.php\">try again.</a>");
 	else
 	{
-		//select the db
-		mysql_select_db($dbname);
-		//echo "PLACEHOLDER TEXT";
-		//whilst the register step comes up because your user isn't on the system, make sure the user they're registering also isn't on the system either.
-		$sql = "SELECT * FROM test_users WHERE UserName like '" . $username . "'";
-		$rResult = mysql_query($sql);
-		if (mysql_num_rows($rResult) > 0)
-		//If the user already exists, the best option is to punt them back to the login page as punishment for doing it wrong or allow them to attempt to register again as a unique user
-		{
-			echo "This user already exists. Please <a href=\"index.php\">log in</a> or <a href=\"registerform.php\">try again.</a>";
-			die();
-		}
-		else
-		{
-			//All good, now to add the new user to the database
-			$sqladd="INSERT INTO test_users (UserName, Password, Email, CanEmail)
-			VALUES('$username','$passone','$email','$canEmail')";
+		//All good, now to add the new user to the database
+		$sqladd="INSERT INTO test_users (UserName, Password, Email, CanEmail)
+		VALUES('$username','$pass','$email','$canEmail')";
 
-			if (!mysql_query($sqladd))
-			{
-				die('Error: ' . mysql_error());
-			}
-			
-			//Push them to the verification page
-			header("Location: /vemail.php?user=" . $username);
+		if (!mysql_query($sqladd))
+		{
+			die('Error: ' . mysql_error());
 		}
+		
+		//Push them to the verification page
+		header("Location: /vemail.php?user=" . $username);
+	}
 	}
 }
 ?>
