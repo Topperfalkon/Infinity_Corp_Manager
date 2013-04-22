@@ -1,7 +1,17 @@
-/************************************************
-*	Infinity Corp Manager [PAGENAME]
-*	
-*	[DESCRIPTION]
-*
-*
-*************************************************/
+// Use this header block as an example in new files
+
+/**
+ * Installer for Infinity Corp Manager
+ *
+ * This file is to be run once for the initial installation of the application on a server.
+ * This file performs the following functions:
+ *
+ * * Gets configuration settings from user via HTML form
+ * * Creates database and tables if it does not exist
+ * * Stores settings in config.php
+ *
+ * @package Infinity_Corp_Manager
+ * @license Creative Commons Attribution-NonCommercial-ShareAlike (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+ * @author Harley Fagetter (http://github.com/Topperfalkon/)
+ * @author Hamish Robertson (http://github.com/hrobertson/)
+ */

@@ -14,6 +14,8 @@ include 'config.php';
 //start the session
 session_start();
 
+$mysqli = new mysqli($dbserver, $dbuser, $dbpass)
+
 //make sure the db is alive
 if (!$con)
 {
@@ -21,12 +23,12 @@ if (!$con)
 }
 
 //select the db
-mysql_select_db($dbname);
+$mysqli->select_db($dbname);
 
 $corp=$_GET['corpid'];
 
 //Get a db query  
-$result = mysql_query("SELECT * FROM Test_Corporations WHERE Corp_Id = " . $corp);
+$result = $mysqli->query("SELECT * FROM Test_Corporations WHERE Corp_Id = " . $corp);
 
 //echo $corp;
 

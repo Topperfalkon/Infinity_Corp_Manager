@@ -125,6 +125,7 @@ if (!isset($_POST['submit'])) {
 		"\$dbuser   = '{$dbuser}';",
 		"\$dbname   = '{$dbname}';",
 		"\$dbpass   = '{$dbpass}';",
+		"\$mysqli = new mysqli(\$dbserver, \$dbuser, \$dbpass);",
 		'',
 		'// Other',
 		"\$siteURL = '{$_POST['siteurl']}';",
