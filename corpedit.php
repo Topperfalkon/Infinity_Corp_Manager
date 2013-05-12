@@ -13,25 +13,26 @@ include 'config.php';
 
 session_start();
 
+$mysqli = new mysqli($dbserver, $dbuser, $dbpass);
+
 //make sure you're actually logged in
 if($_SESSION['login']===1)
 {
 	//make sure the db is alive
-	if (!$con)
-	  {
-	  die('Could not connect: ' . mysql_error());
-	  }
+	if ($mysqli->connect_errno) {
+		die ("Failed to connect to MySQL server: ({$mysqli->connect_errno}) {$mysqli->connect_error}");
+	}
 
 	//select the db
-	mysql_select_db($dbname);
+	$mysqli->select_db($dbname);
 
 	$user= $_SESSION['username'];
 
 	//Get a db query  
-	$result = mysql_query("SELECT * FROM Test_Corporations WHERE CreatorName = \"" . $user . "\"");
+	$result = $mysqli->query("SELECT * FROM Test_Corporations WHERE CreatorName = \"" . $user . "\"");
 
 	//Get the results
-	$row = mysql_fetch_array($result);
+	$row = $result->fetch_array();
 
 	//Pass the results into the forms
 	echo
@@ -122,4 +123,6 @@ else
 	//go to index
 	header( 'Location: http://test.phoeniximperium.org/index.php');
 }
+
+$mysqli->close($con);
 ?>

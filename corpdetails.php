@@ -14,12 +14,11 @@ include 'config.php';
 //start the session
 session_start();
 
-$mysqli = new mysqli($dbserver, $dbuser, $dbpass)
+$mysqli = new mysqli($dbserver, $dbuser, $dbpass);
 
 //make sure the db is alive
-if (!$con)
-{
-	die('Could not connect: ' . mysql_error());
+if ($mysqli->connect_errno) {
+	die ("Failed to connect to MySQL server: ({$mysqli->connect_errno}) {$mysqli->connect_error}");
 }
 
 //select the db
@@ -30,10 +29,8 @@ $corp=$_GET['corpid'];
 //Get a db query  
 $result = $mysqli->query("SELECT * FROM Test_Corporations WHERE Corp_Id = " . $corp);
 
-//echo $corp;
-
 //Get the results
-$row = mysql_fetch_array($result);
+$row = $result->fetch_array();
 
 //Change the checkbox output to something easier on the eye
 if($row['AllowMulti'] === "Y")
@@ -121,4 +118,5 @@ if ($isOpen === "Yes")
 //echo "<br />" . $row['IsOpen'] . "<br />" . $isOpen;
 echo "<br /><br />Return to <a href=\"index.php\">Main Page</a>";
 
+$mysqli->close($con);
 ?>

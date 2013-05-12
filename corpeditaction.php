@@ -13,33 +13,34 @@ include 'config.php';
 
 session_start();
 
+$mysqli = new mysqli($dbserver, $dbuser, $dbpass);
+
 //make sure you're actually logged in
 if($_SESSION['login']===1)
 {
 	//make sure the db is alive
-	if (!$con)
-	  {
-	  die('Could not connect: ' . mysql_error());
-	  }
+	if ($mysqli->connect_errno) {
+		die ("Failed to connect to MySQL server: ({$mysqli->connect_errno}) {$mysqli->connect_error}");
+	}
 
 	//select the db
-	mysql_select_db($dbname);
+	$mysqli->select_db($dbname);
 
 	$user= $_SESSION['username'];
 
 	//Get a db query  
-	$result = mysql_query("SELECT * FROM Test_Corporations WHERE CreatorName = \"" . $user . "\"");
+	$result = $mysqli->query("SELECT * FROM Test_Corporations WHERE CreatorName = \"" . $user . "\"");
 
 	//Get the results
-	$row = mysql_fetch_array($result);
+	$row = $result->fetch_array();
 
 	//declare variables from inputs
-	$username= mysql_real_escape_string ($_SESSION['username']);
-	$corpname= mysql_real_escape_string ($_POST['CorpName']);
-	$corpdesc= mysql_real_escape_string ($_POST['Desc']);
-	$corptick= mysql_real_escape_string ($_POST['CorpTicker']);
-	$logoURL= mysql_real_escape_string ($_POST['LogoURL']);
-	$corpURL= mysql_real_escape_string ($_POST['CorpURL']);
+	$username= $mysqli->real_escape_string ($_SESSION['username']);
+	$corpname= $mysqli->real_escape_string ($_POST['CorpName']);
+	$corpdesc= $mysqli->real_escape_string ($_POST['Desc']);
+	$corptick= $mysqli->real_escape_string ($_POST['CorpTicker']);
+	$logoURL= $mysqli->real_escape_string ($_POST['LogoURL']);
+	$corpURL= $mysqli->real_escape_string ($_POST['CorpURL']);
 	$isOpen= $_POST['isOpen'];
 	$allowMulti= $_POST['allowMulti'];
 
@@ -83,8 +84,8 @@ if($_SESSION['login']===1)
 	{
 		//check you don't already exist
 		$sql = "SELECT * FROM Test_Corporations WHERE CorpName like '" . $corpname . "'";
-		$rResult = mysql_query($sql);
-		if (mysql_num_rows($rResult) > 0) 
+		$rResult = $mysqli->query($sql);
+		if ($mysqli->num_rows($rResult) > 0) 
 		{
 			//The corp's already registered, so give the user a couple of options on how to proceed
 			echo 
@@ -96,7 +97,7 @@ if($_SESSION['login']===1)
 		}
 		else
 			{
-			mysql_query("UPDATE Test_Corporations
+			$mysqli->query("UPDATE Test_Corporations
 						set CorpName = '" . $corpname ."'
 						where CreatorName = '" . $username . "'");
 
@@ -105,8 +106,8 @@ if($_SESSION['login']===1)
 	if(strcmp($corptick,$row['CorpTicker']) != 0)
 	{
 		$sql2= "SELECT * FROM Test_Corporations WHERE CorpTicker like '" . $corptick . "'";
-		$rResult2 = mysql_query($sql2);
-		if (mysql_num_rows($rResult2) > 0) 
+		$rResult2 = $mysqli->query($sql2);
+		if ($mysqli->num_rows($rResult2) > 0) 
 		{
 			//The corp's already registered, so give the user a couple of options on how to proceed
 			echo 
@@ -118,7 +119,7 @@ if($_SESSION['login']===1)
 		}
 		else
 			{
-			mysql_query("UPDATE Test_Corporations
+			$mysqli->query("UPDATE Test_Corporations
 						set CorpTicker = '" . $corptick ."'
 						where CreatorName = '" . $username . "'");
 
@@ -126,7 +127,7 @@ if($_SESSION['login']===1)
 	}
 	if(strcmp($corpdesc,$row['CorpDesc']) != 0)
 	{
-	mysql_query("UPDATE Test_Corporations
+		$mysqli->query("UPDATE Test_Corporations
 				set CorpDesc = '" . $corpdesc ."'
 				where CreatorName = '" . $username . "'");
 
@@ -134,13 +135,14 @@ if($_SESSION['login']===1)
 
 	if(strcmp($corpURL,$row['CorpURL']) != 0)
 	{
-	mysql_query("UPDATE Test_Corporations
+	$mysqli->query("UPDATE Test_Corporations
 				set CorpURL = '" . $corpURL ."'
 				where CreatorName = '" . $username . "'");
 
-	}if(strcmp($logoURL,$row['LogoURL']) != 0)
+	}
+	if(strcmp($logoURL,$row['LogoURL']) != 0)
 	{
-	mysql_query("UPDATE Test_Corporations
+		$mysqli->query("UPDATE Test_Corporations
 				set LogoURL = '" . $logoURL ."'
 				where CreatorName = '" . $username . "'");
 

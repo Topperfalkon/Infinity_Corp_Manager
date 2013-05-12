@@ -12,17 +12,19 @@ include 'config.php';
 
 //start the session
 session_start();
+
+$mysqli = new mysqli($dbserver, $dbuser, $dbpass);
+
 //make sure the db is alive
-if (!$con)
-{
-	die('Could not connect: ' . mysql_error());
+if ($mysqli->connect_errno) {
+	die ("Failed to connect to MySQL server: ({$mysqli->connect_errno}) {$mysqli->connect_error}");
 }
 
 //select the db
-mysql_select_db($dbname);
+$mysqli->select_db($dbname);
 
 //Get a db query  
-$result = mysql_query("SELECT * FROM Test_Corporations");
+$result = $mysqli->query("SELECT * FROM Test_Corporations");
 
 //Put in a decent header
 echo 
@@ -55,7 +57,7 @@ echo
 ");
 
 //pass the values into an array loop
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch_array())
 {
 	echo "<tr>";
 	echo "<td>" . $row['CorpTicker'] . "</td>";
@@ -72,5 +74,5 @@ echo "</table>";
 echo "<br /><br /><p class=\"dirhp\"><a href=\"index.php\">Return to Main Page</a></p></html></div>";
 
 //Don't need the db connection any more, so close it.
-mysql_close($con); 
+$mysqli->close($con);
 ?>
