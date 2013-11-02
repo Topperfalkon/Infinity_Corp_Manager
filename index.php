@@ -26,7 +26,7 @@ if($_SESSION['login']===1)
 		<body>
 		<p>Welcome " . $_SESSION['username'] . "<br />"
 	);
-	//Check whether you've been logged in as a corp owner11	
+	//Check whether you've been logged in as a corp owner
 	if($_SESSION['corpowner']===1)
 	{
 		echo "<p><a href=\"./mycorp.php\" target=\"_top\">My Corp</a><br />";

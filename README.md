@@ -1,20 +1,20 @@
-Infinity Corp Manager
+Infinity Community Manager
 =====================
 
-This is a fork of [Topperfalkon's Infinity Corp Manager](http://github.com/Topperfalkon/Infinity_Corp_Manager) project
+This is a fork of [Topperfalkon's Infinity Corp Manager](http://github.com/Topperfalkon/icm) project
 
-Infinity Corp Manager
+Infinity  Manager
 ---------------------
 
-Infinity Corp Manager is a PHP and MySQL web application for the organisation of player groups. It is targeted at the community of the upcoming game, [Infinity](#infinity), but is currently a generic community management tool.
+Infinity Community Manager is a PHP and MySQL web application for the organisation of player groups. It is targeted at the community of the upcoming game, [Infinity](#infinity), but is currently a generic community management tool.
 
 Background of this fork
 -----------------------
 
-[Topperfalkon](http://github.com/Topperfalkon) started the Infinity Corp Manager project in part to teach himself PHP.
+[Topperfalkon](http://github.com/Topperfalkon) started the Infinity Community Manager project in part to teach himself PHP.
 He acknowledged it was a long way off a usable product and released the code under [CC BY-SA-NC](http://creativecommons.org/licenses/by-nc-sa/3.0/) enabling others to help in the development of the application for the Infinity community.
 
-For the status of Topperfalkon's original repo, see [his readme](https://github.com/Topperfalkon/Infinity_Corp_Manager/blob/master/README.md)
+The Infinity Community Network aims to finish this project to deliver it to the Infinity Community
 
 Infinity
 -----------------------------
